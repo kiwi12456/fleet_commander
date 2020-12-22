@@ -178,9 +178,20 @@ miningBotDecisionRoot context =
                             }
                             context
                             |> Maybe.withDefault
-                                (ensureFleetHangarIsSelectedInInventoryWindow
-                                    context.readingFromGameClient
-                                    (inSpaceWithFleetHangarSelected context seeUndockingComplete)
+                                (case context.readingFromGameClient |> inventoryWindowWithOreHoldSelectedFromGameClient of
+                                    Just inventoryWindow ->
+                                        (ensureOreHoldIsSelectedInInventoryWindow
+                                            context
+                                            (inSpaceWithOreHoldSelected context seeUndockingComplete)
+                                        )
+
+                                    Nothing ->
+
+                                        (ensureFleetHangarIsSelectedInInventoryWindow
+                                            context
+                                            (inSpaceWithFleetHangarSelected context seeUndockingComplete)
+                                        )
+                                
                                 )
                 }
                 context.readingFromGameClient
@@ -446,9 +457,9 @@ inSpaceWithFleetHangarSelected context seeUndockingComplete inventoryWindowWithF
             Just fillPercent ->
                 let
                     describeThresholdToUnload =
-                        (5 |> String.fromInt) ++ "%"
+                        (90 |> String.fromInt) ++ "%"
                 in
-                if 5 <= fillPercent then
+                if 90 <= fillPercent then
                     describeBranch ("The fleet hangar is filled at least " ++ describeThresholdToUnload ++ ". Move to ore hold.")
                         (case inventoryWindowWithFleetHangarSelected |> fleetHangarFromInventoryWindow of
                             Nothing ->
