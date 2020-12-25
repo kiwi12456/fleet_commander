@@ -638,7 +638,7 @@ inSpaceWithFleetHangarSelected context seeUndockingComplete inventoryWindowWithF
 
                 else
                     describeBranch ("The fleet hangar is not yet filled " ++ describeThresholdToUnload ++ ". Continue.")
-                        (ensureFleetHangarIsSelectedInInventoryWindow
+                        (ensureOreHoldIsSelectedInInventoryWindow
                             context.readingFromGameClient
                             (inSpaceWithOreHoldSelected context seeUndockingComplete)
                         )
