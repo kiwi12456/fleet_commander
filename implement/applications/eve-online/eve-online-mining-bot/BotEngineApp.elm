@@ -1140,6 +1140,16 @@ knownMiningModules context =
                 >> Maybe.withDefault False
             )
 
+knownBurstModules : BotDecisionContext -> List EveOnline.ParseUserInterface.ShipUIModuleButton
+knownBurstModules context =
+    context.readingFromGameClient.shipUI
+        |> Maybe.map .moduleButtons
+        |> Maybe.withDefault []
+        |> List.filter
+            (EveOnline.AppFramework.getModuleButtonTooltipFromModuleButton context.memory.shipModules
+                >> Maybe.map tooltipLooksLikeBurstModule
+                >> Maybe.withDefault False
+            )
 
 knownModulesToActivateAlways : BotDecisionContext -> List ( String, EveOnline.ParseUserInterface.ShipUIModuleButton )
 knownModulesToActivateAlways context =
@@ -1163,6 +1173,13 @@ tooltipLooksLikeMiningModule =
         >> List.any
             (Regex.fromString "\\d\\s*m3\\s*\\/\\s*s" |> Maybe.map Regex.contains |> Maybe.withDefault (always False))
 
+tooltipLooksLikeBurstModule : EveOnline.ParseUserInterface.ModuleButtonTooltip -> Bool
+tooltipLooksLikeBurstModule =
+    .uiNode
+        >> .uiNode
+        >> getAllContainedDisplayTexts
+        >> List.any
+            (String.toLower |> String.contains "burst" |> Maybe.withDefault (always False))
 
 tooltipLooksLikeModuleToActivateAlways : BotDecisionContext -> EveOnline.ParseUserInterface.ModuleButtonTooltip -> Maybe String
 tooltipLooksLikeModuleToActivateAlways context =
