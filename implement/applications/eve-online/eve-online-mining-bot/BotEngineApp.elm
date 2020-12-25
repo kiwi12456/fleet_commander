@@ -1179,7 +1179,7 @@ tooltipLooksLikeBurstModule =
         >> .uiNode
         >> getAllContainedDisplayTexts
         >> List.any
-            (String.toLower >> String.contains "burst" |> Maybe.withDefault (always False))
+            (String.toLower >> String.contains "burst")
 
 tooltipLooksLikeModuleToActivateAlways : BotDecisionContext -> EveOnline.ParseUserInterface.ModuleButtonTooltip -> Maybe String
 tooltipLooksLikeModuleToActivateAlways context =
