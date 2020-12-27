@@ -729,7 +729,16 @@ ensureOreHoldIsSelectedInInventoryWindow readingFromGameClient continueWithInven
         Nothing ->
             case readingFromGameClient.inventoryWindows |> List.head of
                 Nothing ->
-                    describeBranch "I do not see an inventory window. Please open an inventory window." askForHelpToGetUnstuck
+                    -- describeBranch "I do not see an inventory window. Opening inventory window."
+                    endDecisionPath
+                        (actWithoutFurtherReadings
+                            ( "I do not see an inventory window. Opening inventory window."
+                            , [ [ EffectOnWindow.KeyDown EffectOnWindow.vkey_I ]
+                            , [ EffectOnWindow.KeyUp EffectOnWindow.vkey_I ]
+                            ]
+                                |> List.concat
+                            )
+                        )
 
                 Just inventoryWindow ->
                     describeBranch
@@ -783,7 +792,16 @@ ensureFleetHangarIsSelectedInInventoryWindow readingFromGameClient continueWithI
         Nothing ->
             case readingFromGameClient.inventoryWindows |> List.head of
                 Nothing ->
-                    describeBranch "I do not see an inventory window. Please open an inventory window." askForHelpToGetUnstuck
+                    -- describeBranch "I do not see an inventory window. Opening inventory window."
+                    endDecisionPath
+                        (actWithoutFurtherReadings
+                            ( "I do not see an inventory window. Opening inventory window."
+                            , [ [ EffectOnWindow.KeyDown EffectOnWindow.vkey_I ]
+                            , [ EffectOnWindow.KeyUp EffectOnWindow.vkey_I ]
+                            ]
+                                |> List.concat
+                            )
+                        )
 
                 Just inventoryWindow ->
                     describeBranch
