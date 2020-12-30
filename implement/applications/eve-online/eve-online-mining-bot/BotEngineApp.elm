@@ -429,7 +429,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                                             (case context.readingFromGameClient.fleetWindow |> Maybe.andThen (.fleetMembers >> List.head) of
                                                 Just fleetMembers ->
                                                     (useContextMenuCascade
-                                                        ( "Fleet destination", fleetDestination )
+                                                        ( "Fleet destination", fleetMembers )
                                                         (useMenuEntryWithTextContaining "Broadcast" menuCascadeCompleted)
                                                         context.readingFromGameClient
                                                     )
