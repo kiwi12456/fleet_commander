@@ -31,7 +31,7 @@ type alias ParsedUserInterface =
     , repairShopWindow : Maybe RepairShopWindow
     , characterSheetWindow : Maybe CharacterSheetWindow
     , fleetWindow : Maybe FleetWindow
-    , fleetBroadcast : Maybe FleetWindow
+    , fleetBroadcast : Maybe FleetBroadcast
     , watchListPanel : Maybe WatchListPanel
     , moduleButtonTooltip : Maybe ModuleButtonTooltip
     , neocom : Maybe Neocom
@@ -483,6 +483,10 @@ type alias FleetWindow =
     , fleetMembers : List UITreeNodeWithDisplayRegion
     }
 
+type alias FleetBroadcast =
+    { uiNode : UITreeNodeWithDisplayRegion
+    , broadcast : List UITreeNodeWithDisplayRegion
+    }
 
 type alias WatchListPanel =
     { uiNode : UITreeNodeWithDisplayRegion
@@ -2248,7 +2252,7 @@ parseFleetWindowFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe FleetWindo
 parseFleetWindowFromUITreeRoot uiTreeRoot =
     uiTreeRoot
         |> listDescendantsWithDisplayRegion
-        |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetHeader")
+        |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetWindow")
         |> List.head
         |> Maybe.map parseFleetWindow
 
@@ -2277,13 +2281,13 @@ parseFleetBroadcastFromUITreeRoot uiTreeRoot =
 parseFleetBroadcast : UITreeNodeWithDisplayRegion -> FleetWindow
 parseFleetBroadcast windowUINode =
     let
-        fleetMembers =
+        broadcast =
             windowUINode
                 |> listDescendantsWithDisplayRegion
                 |> List.filter (.uiNode >> getNameFromDictEntries >> (==) (Just "lastbroadcastheader"))
     in
     { uiNode = windowUINode
-    , fleetMembers = fleetMembers
+    , broadcast = broadcast
     }
 
 parseWatchListPanelFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe WatchListPanel
