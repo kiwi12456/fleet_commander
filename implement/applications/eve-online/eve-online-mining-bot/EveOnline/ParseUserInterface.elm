@@ -2250,7 +2250,7 @@ parseFleetWindowFromUITreeRoot uiTreeRoot =
         |> listDescendantsWithDisplayRegion
         |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetHeader")
         |> List.head
-        -- |> Maybe.map parseFleetWindow
+        |> Maybe.map parseFleetWindow
 
 
 parseFleetWindow : UITreeNodeWithDisplayRegion -> FleetWindow
