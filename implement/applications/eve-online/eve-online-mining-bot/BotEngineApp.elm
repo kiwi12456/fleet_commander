@@ -416,30 +416,30 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                 describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
             Just fleetDestination ->
                 describeBranch ("Fleet broadcast found!") askForHelpToGetUnstuck
-                -- case fleetDestination.uiNode |> getAllContainedDisplayTexts |> List.head of
-                --     Nothing ->
-                --         describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
-                --     Just fleetBroadcastText ->
-                --         case (String.split " " fleetBroadcastText |> List.head) of
-                --                 Nothing ->
-                --                     describeBranch ("Cannot find fleet broadcast message.") askForHelpToGetUnstuck
-                --                 Just actualDestination ->
-                --                     if (actualDestination /= "Tris") then
-                --                         describeBranch ("Broadcast message incorrect. Broadcast fleet commander location.")
-                --                             (case context.readingFromGameClient.fleetWindow |> Maybe.andThen (.fleetMembers >> List.head) of
-                --                                 Just fleetMembers ->
-                --                                     (useContextMenuCascade
-                --                                         ( "Fleet destination", fleetDestination )
-                --                                         (useMenuEntryWithTextContaining "Broadcast" menuCascadeCompleted)
-                --                                         context.readingFromGameClient
-                --                                     )
+                case fleetDestination.uiNode |> getAllContainedDisplayTexts |> List.head of
+                    Nothing ->
+                        describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
+                    Just fleetBroadcastText ->
+                        case (String.split " " fleetBroadcastText |> List.head) of
+                                Nothing ->
+                                    describeBranch ("Cannot find fleet broadcast message.") askForHelpToGetUnstuck
+                                Just actualDestination ->
+                                    if (actualDestination /= "Tris") then
+                                        describeBranch ("Broadcast message incorrect. Broadcast fleet commander location.")
+                                            (case context.readingFromGameClient.fleetWindow |> Maybe.andThen (.fleetMembers >> List.head) of
+                                                Just fleetMembers ->
+                                                    (useContextMenuCascade
+                                                        ( "Fleet destination", fleetDestination )
+                                                        (useMenuEntryWithTextContaining "Broadcast" menuCascadeCompleted)
+                                                        context.readingFromGameClient
+                                                    )
 
-                --                                 Nothing ->
-                --                                     describeBranch ("Fleet window is not open or fleet is not formed. Please take remedial action.") askForHelpToGetUnstuck
+                                                Nothing ->
+                                                    describeBranch ("Fleet window is not open or fleet is not formed. Please take remedial action.") askForHelpToGetUnstuck
 
-                --                             )
-                --                     else
-                --                         describeBranch ("Continue Here.,") askForHelpToGetUnstuck
+                                            )
+                                    else
+                                        describeBranch ("Continue Here.,") askForHelpToGetUnstuck
 
 
                                         -- case context |> knownBurstModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
