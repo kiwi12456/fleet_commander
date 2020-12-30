@@ -426,8 +426,8 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                                             (case context.readingFromGameClient.fleetWindow |> Maybe.andThen (.fleetMembers >> List.head) of
                                                 Just fleetMembers ->
                                                     (useContextMenuCascade
-                                                        ( "Fleet destination", fleetMembers )
-                                                        (useMenuEntryWithTextContaining "Broadcast" menuCascadeCompleted)
+                                                        ( "Fleet destination", fleetDestination )
+                                                        (useMenuEntryWithTextContaining "Set Destination" menuCascadeCompleted)
                                                         context.readingFromGameClient
                                                     )
 
@@ -436,6 +436,9 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
 
                                             )
                                     else
+
+
+
                                         case context |> knownBurstModules |> List.filter (.isActive >> Maybe.withDefault False >> not) |> List.head of
                                             Just inactiveModule ->
                                                 describeBranch "I see an inactive burst module. Activate it."
@@ -538,7 +541,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
 
                                                                         Nothing ->
                                                                             describeBranch "I do not see a fleet hangar. Switch to Orca." askForHelpToGetUnstuck
-                    )
+                                                    )
 
 inSpaceWithFleetHangarSelected : BotDecisionContext -> SeeUndockingComplete -> EveOnline.ParseUserInterface.InventoryWindow -> DecisionPathNode
 inSpaceWithFleetHangarSelected context seeUndockingComplete inventoryWindowWithFleetHangarSelected =
