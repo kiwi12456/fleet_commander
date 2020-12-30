@@ -415,7 +415,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
             Nothing ->
                 describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
             Just fleetDestination ->
-                describeBranch ("Fleet broadcast found!") askForHelpToGetUnstuck
+                -- describeBranch ("Fleet broadcast found!") askForHelpToGetUnstuck
                 case fleetDestination.uiNode |> getAllContainedDisplayTexts |> List.head of
                     Nothing ->
                         describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
