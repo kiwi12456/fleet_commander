@@ -31,6 +31,7 @@ type alias ParsedUserInterface =
     , repairShopWindow : Maybe RepairShopWindow
     , characterSheetWindow : Maybe CharacterSheetWindow
     , fleetWindow : Maybe FleetWindow
+    , fleetBroadcast : Maybe FleetWindow
     , watchListPanel : Maybe WatchListPanel
     , moduleButtonTooltip : Maybe ModuleButtonTooltip
     , neocom : Maybe Neocom
@@ -526,6 +527,7 @@ parseUserInterfaceFromUITree uiTree =
     , repairShopWindow = parseRepairShopWindowFromUITreeRoot uiTree
     , characterSheetWindow = parseCharacterSheetWindowFromUITreeRoot uiTree
     , fleetWindow = parseFleetWindowFromUITreeRoot uiTree
+    , fleetBroadcast = parseFleetBroadcastFromUITreeRoot uiTree
     , watchListPanel = parseWatchListPanelFromUITreeRoot uiTree
     , neocom = parseNeocomFromUITreeRoot uiTree
     , messageBoxes = parseMessageBoxesFromUITreeRoot uiTree
@@ -2263,6 +2265,26 @@ parseFleetWindow windowUINode =
     , fleetMembers = fleetMembers
     }
 
+parseFleetBroadcastFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe FleetWindow
+parseFleetBroadcastFromUITreeRoot uiTreeRoot =
+    uiTreeRoot
+        |> listDescendantsWithDisplayRegion
+        |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetWindow")
+        |> List.head
+        |> Maybe.map parseFleetBroadcast
+
+
+parseFleetBroadcast : UITreeNodeWithDisplayRegion -> FleetWindow
+parseFleetBroadcast windowUINode =
+    let
+        fleetMembers =
+            windowUINode
+                |> listDescendantsWithDisplayRegion
+                |> List.filter (.uiNode >> getNameFromDictEntries >> (==) (Just "lastbroadcastheader"))
+    in
+    { uiNode = windowUINode
+    , fleetMembers = fleetMembers
+    }
 
 parseWatchListPanelFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe WatchListPanel
 parseWatchListPanelFromUITreeRoot uiTreeRoot =
