@@ -2269,7 +2269,7 @@ parseFleetWindow windowUINode =
     , fleetMembers = fleetMembers
     }
 
-parseFleetBroadcastFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe FleetWindow
+parseFleetBroadcastFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe FleetBroadcast
 parseFleetBroadcastFromUITreeRoot uiTreeRoot =
     uiTreeRoot
         |> listDescendantsWithDisplayRegion
@@ -2278,7 +2278,7 @@ parseFleetBroadcastFromUITreeRoot uiTreeRoot =
         |> Maybe.map parseFleetBroadcast
 
 
-parseFleetBroadcast : UITreeNodeWithDisplayRegion -> FleetWindow
+parseFleetBroadcast : UITreeNodeWithDisplayRegion -> FleetBroadcast
 parseFleetBroadcast windowUINode =
     let
         broadcast =
