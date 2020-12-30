@@ -2259,7 +2259,7 @@ parseFleetWindow windowUINode =
         fleetMembers =
             windowUINode
                 |> listDescendantsWithDisplayRegion
-                |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetMember")
+                |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FleetHeader")
     in
     { uiNode = windowUINode
     , fleetMembers = fleetMembers

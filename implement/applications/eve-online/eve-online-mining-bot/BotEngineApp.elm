@@ -429,7 +429,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                                                 Just fleetMembers ->
                                                     (useContextMenuCascade
                                                         ( "Fleet destination", fleetDestination )
-                                                        (useMenuEntryWithTextContaining "Set Destination" menuCascadeCompleted)
+                                                        (useMenuEntryWithTextContaining "Broadcast" menuCascadeCompleted)
                                                         context.readingFromGameClient
                                                     )
 
