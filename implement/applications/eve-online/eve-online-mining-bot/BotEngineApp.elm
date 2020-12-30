@@ -411,7 +411,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                 |> Maybe.withDefault waitForProgressInGame
             )
     else
-        case context.readingFromGameClient.fleetBroadcast |> Maybe.andThen (.fleetMembers >> List.head) of
+        case context.readingFromGameClient.fleetBroadcast |> Maybe.andThen (.broadcast >> List.head) of
             Nothing ->
                 describeBranch ("Cannot find fleet broadcast.") askForHelpToGetUnstuck
             Just fleetDestination ->
