@@ -450,7 +450,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                             Just corpText ->
                                 describeBranch ("There is a corp member not in the fleet. Invite to fleet."++corpText)
                                     (useContextMenuCascade
-                                        ( "corpMember", corpMember )
+                                        ( "corpMember", corpMember.uiNode )
                                         (useMenuEntryWithTextContainingFirstOf
                                             ["form", "invite"]
                                             (useMenuEntryWithTextContaining "Squad Member" menuCascadeCompleted)
