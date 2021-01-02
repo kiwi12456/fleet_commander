@@ -32,6 +32,7 @@ type alias ParsedUserInterface =
     , characterSheetWindow : Maybe CharacterSheetWindow
     , fleetWindow : Maybe FleetWindow
     , fleetBroadcast : Maybe FleetBroadcast
+    , corpMembers: Maybe CorpMembers
     , watchListPanel : Maybe WatchListPanel
     , moduleButtonTooltip : Maybe ModuleButtonTooltip
     , neocom : Maybe Neocom
@@ -488,6 +489,11 @@ type alias FleetBroadcast =
     , broadcast : List UITreeNodeWithDisplayRegion
     }
 
+type alias CorpMembers =
+    { uiNode : UITreeNodeWithDisplayRegion
+    , members : List UITreeNodeWithDisplayRegion
+    }
+
 type alias WatchListPanel =
     { uiNode : UITreeNodeWithDisplayRegion
     , entries : List UITreeNodeWithDisplayRegion
@@ -532,6 +538,7 @@ parseUserInterfaceFromUITree uiTree =
     , characterSheetWindow = parseCharacterSheetWindowFromUITreeRoot uiTree
     , fleetWindow = parseFleetWindowFromUITreeRoot uiTree
     , fleetBroadcast = parseFleetBroadcastFromUITreeRoot uiTree
+    , corpMembers = parseCorpMembersFromUITreeRoot uiTree
     , watchListPanel = parseWatchListPanelFromUITreeRoot uiTree
     , neocom = parseNeocomFromUITreeRoot uiTree
     , messageBoxes = parseMessageBoxesFromUITreeRoot uiTree
@@ -2288,6 +2295,27 @@ parseFleetBroadcast windowUINode =
     in
     { uiNode = windowUINode
     , broadcast = broadcast
+    }
+
+parseCorpMemberstFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe CorpMembers
+parseCorpMemberstFromUITreeRoot uiTreeRoot =
+    uiTreeRoot
+        |> listDescendantsWithDisplayRegion
+        |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "XmppChatWindow")
+        |> List.head
+        |> Maybe.map parseCorpMembers
+
+
+parseCorpMembers : UITreeNodeWithDisplayRegion -> CorpMembers
+parseCorpMembers windowUINode =
+    let
+        members =
+            windowUINode
+                |> listDescendantsWithDisplayRegion
+                |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "XmppChatUserEntry")
+    in
+    { uiNode = windowUINode
+    , members = members
     }
 
 parseWatchListPanelFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe WatchListPanel
