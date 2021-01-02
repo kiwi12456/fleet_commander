@@ -124,7 +124,7 @@ goodStandingPatterns =
 
 fleetMemberPatterns : List String
 fleetMemberPatterns =
-    [ "is in your fleet" ]
+    [ "fleet" ]
 
 
 type alias BotSettings =
@@ -444,7 +444,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                         describeBranch "All members are in the fleet." askForHelpToGetUnstuck
                     
                     Just corpMember ->
-                        describeBranch "There is a corp member not in the fleet" askForHelpToGetUnstuck
+                        describeBranch ("There is a corp member not in the fleet"++subsetOfUsersNotFleetMember) askForHelpToGetUnstuck
 
 
             -- Just localChatWindow ->
