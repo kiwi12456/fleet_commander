@@ -414,7 +414,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
         case context.readingFromGameClient.corpMembers |> Maybe.andThen (.members >> List.head) of
             Nothing ->
                 describeBranch ("Cannot find corp members.") askForHelpToGetUnstuck
-            Just members ->
+            Just member ->
                 describeBranch ("Found corp members") askForHelpToGetUnstuck
     
         -- case context.readingFromGameClient.fleetBroadcast |> Maybe.andThen (.broadcast >> List.head) of
