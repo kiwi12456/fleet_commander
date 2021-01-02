@@ -2312,8 +2312,8 @@ parseCorpMembers windowUINode =
         members =
             windowUINode
                 |> listDescendantsWithDisplayRegion
-                |> List.filter (.uiNode >> getHintTextFromDictEntries >> Maybe.map String.toLower >> (==) (Just "capsuleer"))
-                -- |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "XmppChatUserEntry")
+                |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "FlagIconWithState")
+                -- |> List.filter (.uiNode >> getHintTextFromDictEntries >> Maybe.map String.toLower >> (==) (Just "capsuleer"))
     in
     { uiNode = windowUINode
     , members = members
