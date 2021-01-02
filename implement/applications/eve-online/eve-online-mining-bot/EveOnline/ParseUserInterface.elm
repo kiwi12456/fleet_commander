@@ -2297,8 +2297,8 @@ parseFleetBroadcast windowUINode =
     , broadcast = broadcast
     }
 
-parseCorpMemberstFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe CorpMembers
-parseCorpMemberstFromUITreeRoot uiTreeRoot =
+parseCorpMembersFromUITreeRoot : UITreeNodeWithDisplayRegion -> Maybe CorpMembers
+parseCorpMembersFromUITreeRoot uiTreeRoot =
     uiTreeRoot
         |> listDescendantsWithDisplayRegion
         |> List.filter (.uiNode >> .pythonObjectTypeName >> (==) "XmppChatWindow")
