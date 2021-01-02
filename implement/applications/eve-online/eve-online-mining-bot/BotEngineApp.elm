@@ -776,7 +776,7 @@ warpToOverviewEntryIfFarEnough : BotDecisionContext -> OverviewWindowEntry -> Ma
 warpToOverviewEntryIfFarEnough context destinationOverviewEntry =
     case destinationOverviewEntry.objectDistanceInMeters of
         Ok distanceInMeters ->
-            if distanceInMeters <= 50000 then
+            if distanceInMeters <= 150000 then
                 Nothing
 
             else
