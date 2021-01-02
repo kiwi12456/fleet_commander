@@ -415,7 +415,10 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
             Nothing ->
                 describeBranch ("Cannot find corp members.") askForHelpToGetUnstuck
             Just member ->
-                describeBranch ("Found corp members") askForHelpToGetUnstuck
+                if (member.uiNode._hint >> String.toLower >> String.contains "capsuleer" ) then
+                    describeBranch ("Found capsuleer") askForHelpToGetUnstuck
+                else
+                    describeBranch ("Found fleet member") askForHelpToGetUnstuck
     
         -- case context.readingFromGameClient.fleetBroadcast |> Maybe.andThen (.broadcast >> List.head) of
         --     Nothing ->
