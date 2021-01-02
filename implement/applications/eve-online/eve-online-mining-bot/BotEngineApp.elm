@@ -452,7 +452,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                                     (useContextMenuCascade
                                         ( "corpMember", corpMember.uiNode )
                                         (useMenuEntryWithTextContainingFirstOf
-                                            ["form", "invite"]
+                                            ["form fleet with", "invite to fleet"]
                                             (useMenuEntryWithTextContaining "Squad Member" menuCascadeCompleted)
                                         )
                                         context.readingFromGameClient
