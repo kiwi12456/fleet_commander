@@ -418,7 +418,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
     else
         case context.readingFromGameClient |> localChatWindowFromUserInterface of
             Nothing ->
-                Just (describeBranch "I don't see the local chat window." askForHelpToGetUnstuck)
+                describeBranch "I don't see the local chat window." askForHelpToGetUnstuck
 
             Just localChatWindow ->
                 let
