@@ -1245,6 +1245,12 @@ localChatWindowFromUserInterface =
         >> List.filter (.name >> Maybe.map (String.endsWith "_local") >> Maybe.withDefault False)
         >> List.head
 
+localCorpWindowFromUserInterface : ReadingFromGameClient -> Maybe EveOnline.ParseUserInterface.ChatWindow
+localCorpWindowFromUserInterface =
+    .chatWindowStacks
+        >> List.filterMap .chatWindow
+        >> List.filter (.name >> Maybe.map (String.endsWith "_Corp") >> Maybe.withDefault False)
+        >> List.head
 
 shipUIIndicatesShipIsWarpingOrJumping : EveOnline.ParseUserInterface.ShipUI -> Bool
 shipUIIndicatesShipIsWarpingOrJumping =

@@ -37,6 +37,7 @@ import EveOnline.AppFramework
         , ensureInfoPanelLocationInfoIsExpanded
         , getEntropyIntFromReadingFromGameClient
         , localChatWindowFromUserInterface
+        , localCorpWindowFromUserInterface
         , menuCascadeCompleted
         , shipUIIndicatesShipIsWarpingOrJumping
         , useContextMenuCascade
@@ -416,11 +417,11 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                 |> Maybe.withDefault waitForProgressInGame
             )
     else
-        case context.readingFromGameClient |> localChatWindowFromUserInterface of
+        case context.readingFromGameClient |> localCorpWindowFromUserInterface of
             Nothing ->
-                describeBranch "I don't see the local chat window." askForHelpToGetUnstuck
+                describeBranch "I don't see the corp chat window." askForHelpToGetUnstuck
 
-            Just localChatWindow ->
+            Just corpChatWindow ->
                 let
                     chatUserIsFleetMember chatUser =
                         fleetMemberPatterns
@@ -432,7 +433,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                                 )
 
                     subsetOfUsersNotFleetMember =
-                        localChatWindow.userlist
+                        corpChatWindow.userlist
                             |> Maybe.map .visibleUsers
                             |> Maybe.withDefault []
                             |> List.filter (chatUserIsFleetMember >> not)
