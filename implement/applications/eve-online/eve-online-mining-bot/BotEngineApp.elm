@@ -439,12 +439,12 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                             |> List.filter (chatUserIsFleetMember >> not)
                             |> List.head
                 in
-                case subsetOfUsersNotFleetMember of
+                case subsetOfUsersNotFleetMember.standingIconHint of
                     Nothing ->
                         describeBranch "All members are in the fleet." askForHelpToGetUnstuck
                     
                     Just corpMember ->
-                        describeBranch ("There is a corp member not in the fleet"++subsetOfUsersNotFleetMember) askForHelpToGetUnstuck
+                        describeBranch ("There is a corp member not in the fleet"++corpMember) askForHelpToGetUnstuck
 
 
             -- Just localChatWindow ->
