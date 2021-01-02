@@ -1249,7 +1249,7 @@ localCorpWindowFromUserInterface : ReadingFromGameClient -> Maybe EveOnline.Pars
 localCorpWindowFromUserInterface =
     .chatWindowStacks
         >> List.filterMap .chatWindow
-        >> List.filter (.name >> Maybe.map (String.endsWith "_Corp") >> Maybe.withDefault False)
+        >> List.filter (.name >> Maybe.map (String.endsWith "_corp") >> Maybe.withDefault False)
         >> List.head
 
 shipUIIndicatesShipIsWarpingOrJumping : EveOnline.ParseUserInterface.ShipUI -> Bool
