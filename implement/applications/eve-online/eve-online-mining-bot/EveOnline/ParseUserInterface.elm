@@ -2074,7 +2074,7 @@ parseChatWindowUserlist userlistNode =
         visibleUsers =
             userlistNode
                 |> listDescendantsWithDisplayRegion
-                |> List.filter (\uiNode -> [ "XmppChatSimpleUserEntry", "XmppChatUserEntry" ] |> List.member uiNode.uiNode.pythonObjectTypeName)
+                |> List.filter (\uiNode -> [ "XmppChatUserEntry" ] |> List.member uiNode.uiNode.pythonObjectTypeName)
                 |> List.map parseChatUserEntry
 
         scrollControls =

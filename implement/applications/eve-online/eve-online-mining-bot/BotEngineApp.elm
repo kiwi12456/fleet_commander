@@ -121,6 +121,10 @@ goodStandingPatterns : List String
 goodStandingPatterns =
     [ "good standing", "excellent standing", "is in your" ]
 
+fleetMemberPatterns : List String
+fleetMemberPatterns =
+    [ "is in your fleet" ]
+
 
 type alias BotSettings =
     { runAwayShieldHitpointsThresholdPercent : Int
@@ -412,14 +416,60 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                 |> Maybe.withDefault waitForProgressInGame
             )
     else
-        case context.readingFromGameClient.corpMembers |> Maybe.andThen (.members >> List.head) of
+        case context.readingFromGameClient |> localChatWindowFromUserInterface of
             Nothing ->
-                describeBranch ("Cannot find corp members.") askForHelpToGetUnstuck
-            Just member ->
-                if (member.uiNode >> getHintTextFromDictEntries >> String.toLower >> String.contains "capsuleer" ) then
-                    describeBranch ("Found capsuleer") askForHelpToGetUnstuck
-                else
-                    describeBranch ("Found fleet member") askForHelpToGetUnstuck
+                Just (describeBranch "I don't see the local chat window." askForHelpToGetUnstuck)
+
+            Just localChatWindow ->
+                let
+                    chatUserIsFleetMember chatUser =
+                        fleetMemberPatterns
+                            |> List.any
+                                (\fleetMemberPattern ->
+                                    chatUser.standingIconHint
+                                        |> Maybe.map (String.toLower >> String.contains fleetMemberPattern)
+                                        |> Maybe.withDefault False
+                                )
+
+                    subsetOfUsersNotFleetMember =
+                        localChatWindow.userlist
+                            |> Maybe.map .visibleUsers
+                            |> Maybe.withDefault []
+                            |> List.filter (chatUserIsFleetMember >> not)
+                            |> List.head
+                in
+                case subsetOfUsersNotFleetMember of
+                    Nothing ->
+                        describeBranch "All members are in the fleet." askForHelpToGetUnstuck
+                    
+                    Just corpMember ->
+                        describeBranch "There is a corp member not in the fleet" askForHelpToGetUnstuck
+
+
+            -- Just localChatWindow ->
+            --     let
+            --         chatUserHasGoodStanding chatUser =
+            --             goodStandingPatterns
+            --                 |> List.any
+            --                     (\goodStandingPattern ->
+            --                         chatUser.standingIconHint
+            --                             |> Maybe.map (String.toLower >> String.contains goodStandingPattern)
+            --                             |> Maybe.withDefault False
+            --                     )
+
+            --         subsetOfUsersWithNoGoodStanding =
+            --             localChatWindow.userlist
+            --                 |> Maybe.map .visibleUsers
+            --                 |> Maybe.withDefault []
+            --                 |> List.filter (chatUserHasGoodStanding >> not)
+            --     in
+            --     if 1 < (subsetOfUsersWithNoGoodStanding |> List.length) then
+            --         Just (describeBranch "There is an enemy or neutral in local chat." config.ifShouldHide)
+
+            --     else
+            --         Nothing
+
+
     
         -- case context.readingFromGameClient.fleetBroadcast |> Maybe.andThen (.broadcast >> List.head) of
         --     Nothing ->
