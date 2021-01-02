@@ -436,7 +436,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                         corpChatWindow.userlist
                             |> Maybe.map .visibleUsers
                             |> Maybe.withDefault []
-                            |> List.filter (chatUserIsFleetMember >> not)
+                            |> List.filter (chatUserIsFleetMember) -->> not)
                             |> List.head
                 in
                 case subsetOfUsersNotFleetMember of
