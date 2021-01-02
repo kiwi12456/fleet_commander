@@ -416,7 +416,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
             Nothing ->
                 describeBranch ("Cannot find corp members.") askForHelpToGetUnstuck
             Just member ->
-                if (member >> getHintTextFromDictEntries >> String.toLower >> String.contains "capsuleer" ) then
+                if (member.uiNode >> getHintTextFromDictEntries >> String.toLower >> String.contains "capsuleer" ) then
                     describeBranch ("Found capsuleer") askForHelpToGetUnstuck
                 else
                     describeBranch ("Found fleet member") askForHelpToGetUnstuck
