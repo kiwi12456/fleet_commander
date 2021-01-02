@@ -70,7 +70,7 @@ defaultBotSettings =
     , unloadStructureName = Nothing
     , modulesToActivateAlways = []
     , hideWhenNeutralInLocal = Nothing
-    , targetingRange = 8000
+    , targetingRange = 5000
     , miningModuleRange = 5000
     , botStepDelayMilliseconds = 1500
     , oreHoldMaxPercent = 2
@@ -776,7 +776,7 @@ warpToOverviewEntryIfFarEnough : BotDecisionContext -> OverviewWindowEntry -> Ma
 warpToOverviewEntryIfFarEnough context destinationOverviewEntry =
     case destinationOverviewEntry.objectDistanceInMeters of
         Ok distanceInMeters ->
-            if distanceInMeters <= 150000 then
+            if distanceInMeters <= 50000 then
                 Nothing
 
             else
