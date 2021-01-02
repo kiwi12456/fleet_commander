@@ -446,7 +446,7 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                     Just corpMember ->
                         case corpMember.standingIconHint of
                             Nothing ->
-                                describeBranch "No icon exists." askForHelpToGetUnstuck
+                                describeBranch "All members are in the fleet." askForHelpToGetUnstuck
                             Just corpText ->
                                 describeBranch ("There is a corp member not in the fleet"++corpText) askForHelpToGetUnstuck
 
