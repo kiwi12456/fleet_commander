@@ -122,9 +122,9 @@ goodStandingPatterns : List String
 goodStandingPatterns =
     [ "good standing", "excellent standing", "is in your" ]
 
-fleetMemberPatterns : List String
-fleetMemberPatterns =
-    [ "fleet" ]
+corpMemberPatterns : List String
+corpMemberPatterns =
+    [ "capsuleer" ]
 
 
 type alias BotSettings =
@@ -423,23 +423,23 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
 
             Just corpChatWindow ->
                 let
-                    chatUserIsFleetMember chatUser =
-                        fleetMemberPatterns
+                    chatUserIsCorpMember chatUser =
+                        corpMemberPatterns
                             |> List.any
-                                (\fleetMemberPattern ->
+                                (\corpMemberPattern ->
                                     chatUser.standingIconHint
-                                        |> Maybe.map (String.toLower >> String.contains fleetMemberPattern)
+                                        |> Maybe.map (String.toLower >> String.contains corpMemberPattern)
                                         |> Maybe.withDefault False
                                 )
 
-                    subsetOfUsersNotFleetMember =
+                    subsetOfUsersCorpMember =
                         corpChatWindow.userlist
                             |> Maybe.map .visibleUsers
                             |> Maybe.withDefault []
-                            |> List.filter (chatUserIsFleetMember >> not)
+                            |> List.filter (chatUserIsCorpMember)
                             |> List.head
                 in
-                case subsetOfUsersNotFleetMember of
+                case subsetOfUsersCorpMember of
                     Nothing ->
                         describeBranch "All members are in the fleet." askForHelpToGetUnstuck
                     
