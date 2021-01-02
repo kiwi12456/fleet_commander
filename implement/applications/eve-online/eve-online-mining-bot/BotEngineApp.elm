@@ -448,8 +448,15 @@ inSpaceWithOreHoldSelected context seeUndockingComplete inventoryWindowWithOreHo
                             Nothing ->
                                 describeBranch "All members are in the fleet." askForHelpToGetUnstuck
                             Just corpText ->
-                                describeBranch ("There is a corp member not in the fleet"++corpText) askForHelpToGetUnstuck
-
+                                describeBranch ("There is a corp member not in the fleet. Invite to fleet."++corpText)
+                                    (useContextMenuCascade
+                                        ( "corpMember", corpMember )
+                                        (useMenuEntryWithTextContainingFirstOf
+                                            ["form", "invite"]
+                                            (useMenuEntryWithTextContaining "Squad Member" menuCascadeCompleted)
+                                        )
+                                        context.readingFromGameClient
+                                    )
 
             -- Just localChatWindow ->
             --     let
