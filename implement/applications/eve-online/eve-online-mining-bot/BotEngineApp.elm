@@ -781,7 +781,7 @@ travelToMiningSiteAndLaunchDronesAndTargetAsteroid context =
                             )
 
                 Err error ->
-                    Just (describeBranch ("Failed to read the distance: " ++ error) askForHelpToGetUnstuck)
+                    describeBranch ("Failed to read the distance: " ++ error) askForHelpToGetUnstuck
 
 warpToOverviewEntryIfFarEnough : BotDecisionContext -> OverviewWindowEntry -> Maybe DecisionPathNode
 warpToOverviewEntryIfFarEnough context destinationOverviewEntry =
