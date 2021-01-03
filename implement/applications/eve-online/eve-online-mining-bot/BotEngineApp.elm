@@ -756,21 +756,32 @@ travelToMiningSiteAndLaunchDronesAndTargetAsteroid context =
                 )
 
         Just asteroidInOverview ->
-            describeBranch ("Choosing asteroid '" ++ (asteroidInOverview.objectName |> Maybe.withDefault "Nothing") ++ "'")
-                (warpToOverviewEntryIfFarEnough context asteroidInOverview
-                    |> Maybe.withDefault
-                        (launchDrones context.readingFromGameClient
-                            |> Maybe.withDefault
-                                (lockTargetFromOverviewEntryAndEnsureIsInRange
-                                    context.readingFromGameClient
-                                    (min context.eventContext.appSettings.targetingRange
-                                        context.eventContext.appSettings.miningModuleRange
+            case asteroidInOverview.objectDistanceInMeters of
+                Ok distanceInMeters ->
+                    if distanceInMeters > 30000 then
+                        describeBranch "Next asteroid too far at further than 30km. Warp to another asteroid belt."
+                            (returnDronesToBay context.readingFromGameClient
+                                |> Maybe.withDefault
+                                    (warpToMiningSite context.readingFromGameClient)
+                            )
+                    else
+                        describeBranch ("Choosing asteroid '" ++ (asteroidInOverview.objectName |> Maybe.withDefault "Nothing") ++ "'")
+                            (warpToOverviewEntryIfFarEnough context asteroidInOverview
+                                |> Maybe.withDefault
+                                    (launchDrones context.readingFromGameClient
+                                        |> Maybe.withDefault
+                                            (lockTargetFromOverviewEntryAndEnsureIsInRange
+                                                context.readingFromGameClient
+                                                (min context.eventContext.appSettings.targetingRange
+                                                    context.eventContext.appSettings.miningModuleRange
+                                                )
+                                                asteroidInOverview
+                                            )
                                     )
-                                    asteroidInOverview
-                                )
-                        )
-                )
+                            )
 
+                Err error ->
+                    Just (describeBranch ("Failed to read the distance: " ++ error) askForHelpToGetUnstuck)
 
 warpToOverviewEntryIfFarEnough : BotDecisionContext -> OverviewWindowEntry -> Maybe DecisionPathNode
 warpToOverviewEntryIfFarEnough context destinationOverviewEntry =
