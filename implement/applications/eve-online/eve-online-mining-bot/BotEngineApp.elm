@@ -72,7 +72,7 @@ defaultBotSettings =
     , hideWhenNeutralInLocal = Nothing
     , targetingRange = 5000
     , miningModuleRange = 5000
-    , botStepDelayMilliseconds = 1500
+    , botStepDelayMilliseconds = 4000
     , oreHoldMaxPercent = 2
     , selectInstancePilotName = Nothing
     }
